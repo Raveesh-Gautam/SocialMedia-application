@@ -43,11 +43,5 @@ public class CommentController {
 	Comment likeCom=commentService.likeComment(commentId, user.getId());
 		return likeCom;
 	}
-	@PostMapping("/cr")
-	public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-	    System.out.println("Received Comment: " + comment);
-	    // Process the comment
-	    return ResponseEntity.ok(comment);
-	}
 
 }
