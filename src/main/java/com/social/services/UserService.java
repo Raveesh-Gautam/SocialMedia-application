@@ -11,16 +11,16 @@ import com.social.models.User;
 @Service
 public interface UserService {
 
-public User registerUser(User user) throws Exception;
+public User registerUser(User user) throws UserException;
 public User findUserById(Integer userId) throws UserException;
 public User findUserByEmail(String email) throws UserException;
 public User followUser(Integer reqUserId,Integer followUserId) throws UserException;
 public List<User> searchUser(String query) throws UserException;
 public User updateUserDetails(User updatedUser,User existingUser) throws UserException;
 public User findUserProfileByJwt(String jwt) throws UserException;
-void updatePassword(User user, String newPassword);
+void updatePassword(User user, String newPassword) throws UserException;
 void sendPasswordResetEmail(User user);
 public List<User> getAllUser();
-public User updateUser(User user,Integer reqid);
+public User updateUser(User user,Integer reqid)throws UserException;
 
 }

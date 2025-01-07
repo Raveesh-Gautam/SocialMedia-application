@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.social.exception.UserException;
 import com.social.models.Reels;
 import com.social.models.User;
 import com.social.repository.ReelsRepository;
@@ -25,7 +26,7 @@ private ReelsService reelsService;
 @Autowired
 private UserService userService;
 @PostMapping("/")
-	public Reels createReels(@RequestBody Reels reel,@RequestHeader("Authorization") String  jwt) {
+	public Reels createReels(@RequestBody Reels reel,@RequestHeader("Authorization") String  jwt) throws UserException {
 	
 		User reqUser=userService.findUserProfileByJwt(jwt);
 		

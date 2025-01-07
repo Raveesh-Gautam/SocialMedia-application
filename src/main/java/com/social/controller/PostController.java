@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.social.exception.UserException;
 import com.social.models.Post;
 import com.social.models.User;
 import com.social.response.ApiResponse;
@@ -31,7 +32,7 @@ private	PostService postService;
 	private UserService userService;
 	
 	@PostMapping("/create")
-	public ResponseEntity<?> createPost(@RequestHeader("Authorization")String jwt,@RequestBody Post post){
+	public ResponseEntity<?> createPost(@RequestHeader("Authorization")String jwt,@RequestBody Post post) throws UserException{
 		User reqUser=userService.findUserProfileByJwt(jwt);
 		postService.createPost(post, reqUser.getId());
 		
@@ -57,7 +58,7 @@ private	PostService postService;
 	
 	
 	@GetMapping("/user/{userId}")
-	public ResponseEntity<List<Post>> findUsersPost(@PathVariable("userId") Integer userId){
+	public ResponseEntity<List<Post>> findUsersPost(@PathVariable("userId") Integer userId) throws UserException{
 		
 		List<Post> posts=postService.findPostByUserId(userId);
 		return new ResponseEntity<List<Post>>(posts,HttpStatus.OK);

@@ -27,7 +27,7 @@ public class UserController {
 	private UserService userService;
 	
 	@PostMapping("/")
-	public ResponseEntity<String> createUser(@RequestBody User user) throws Exception{
+	public ResponseEntity<String> createUser(@RequestBody User user) throws UserException{
 	try {
 		User newUser=	userService.registerUser(user);
 		return new ResponseEntity<>("User registered",HttpStatus.CREATED);
@@ -41,7 +41,7 @@ public class UserController {
 	}
 	
 	@GetMapping("/{userId}")
-	public ResponseEntity<?> getUserById(@PathVariable("userId") int userId) {
+	public ResponseEntity<?> getUserById(@PathVariable("userId") int userId) throws UserException {
 		
 		User user=userService.findUserById(userId);
 		try {
@@ -53,13 +53,13 @@ public class UserController {
 	}
 	
 	@PutMapping("/follow/users/{userId1}/{userId2}")
-	public User followUserHandler(@RequestHeader("Authorization")String jwt,@PathVariable("userId2") int userId2) {
+	public User followUserHandler(@RequestHeader("Authorization")String jwt,@PathVariable("userId2") int userId2) throws UserException {
 	User reqUser=	userService.findUserProfileByJwt(jwt);
 		return userService.followUser(reqUser.getId(), userId2);
 	}
 	
 	@GetMapping("/search")
-	public List<User> searchUser(@RequestParam("query") String query){
+	public List<User> searchUser(@RequestParam("query") String query) throws UserException{
 		return userService.searchUser(query);
 	}
 	
@@ -71,7 +71,7 @@ public class UserController {
 	
 	
 	@GetMapping("/profile")
-	public User getUserFromToken(@RequestHeader("Authorization")String jwt) {
+	public User getUserFromToken(@RequestHeader("Authorization")String jwt) throws UserException {
 		
 		
 	User user= userService.findUserProfileByJwt(jwt);
@@ -80,7 +80,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/update")
-	public User updateUser(@RequestHeader("Authorization")String jwt,@RequestBody User user) {
+	public User updateUser(@RequestHeader("Authorization")String jwt,@RequestBody User user) throws UserException {
 		User reqUser=userService.findUserProfileByJwt(jwt);
 		User updatedUser=userService.updateUser(user, reqUser.getId());
 		

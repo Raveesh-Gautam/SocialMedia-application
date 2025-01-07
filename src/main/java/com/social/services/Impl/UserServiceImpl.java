@@ -18,12 +18,12 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userRepository;
 	@Override
-	public User registerUser(User user) throws Exception {
+	public User registerUser(User user) throws UserException {
 		// TODO Auto-generated method stub
 		User existingUser=userRepository.findByEmail(user.getEmail());
 		
 		if(existingUser!=null) {
-	        throw new Exception("Email is already registered"); 
+	        throw new UserException("Email is already registered"); 
 		}
 		
 		return userRepository.save(user);
@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User updateUser(User user, Integer reqid) {
+	public User updateUser(User user, Integer reqid) throws UserException {
 		// TODO Auto-generated method stub
 		User newUser=findUserById(reqid);
 		 if (user.getFirstName() != null) {
